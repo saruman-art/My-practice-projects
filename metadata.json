@@ -1,0 +1,7 @@
+{
+  "name": "Lumina Reader - Progressive English Learner",
+  "description": "An AI-powered English reading application designed to take learners from elementary level to high school proficiency with personalized articles and smart vocabulary tracking.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
