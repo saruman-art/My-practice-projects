@@ -5,6 +5,7 @@ export enum DifficultyLevel {
   A2 = 'A2 - Pre-Intermediate',
   B1 = 'B1 - Intermediate',
   B2 = 'B2 - Upper Intermediate (High School)',
+  C1 = 'C1 - Advanced (University)',
 }
 
 export interface Word {
@@ -12,6 +13,7 @@ export interface Word {
   translation: string;
   phonetic: string;
   example: string;
+  exampleTranslation: string;
   timestamp: number;
   mastered: boolean;
 }
@@ -33,6 +35,7 @@ export interface Article {
   difficulty: DifficultyLevel;
   date: string;
   imageUrl?: string;
+  completed?: boolean; // 追踪文章是否读完
 }
 
 export interface AppState {

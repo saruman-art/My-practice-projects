@@ -114,7 +114,7 @@ export const explainWord = async (word: string, context: string) => {
     model: 'gemini-3-flash-preview',
     contents: `Explain the English word "${word}" in the context of this sentence: "${context}". 
                Target audience: A native Chinese speaker with child-level English. 
-               Provide phonetic transcription, a simple Chinese definition, and a new simple example sentence.`,
+               Provide phonetic transcription, a simple Chinese definition, and a new simple example sentence with its Chinese translation.`,
     config: {
       responseMimeType: "application/json",
       responseSchema: {
@@ -123,8 +123,9 @@ export const explainWord = async (word: string, context: string) => {
           phonetic: { type: Type.STRING },
           translation: { type: Type.STRING },
           example: { type: Type.STRING },
+          exampleTranslation: { type: Type.STRING, description: 'The Chinese translation of the new example sentence.' },
         },
-        required: ["phonetic", "translation", "example"],
+        required: ["phonetic", "translation", "example", "exampleTranslation"],
       },
     },
   });

@@ -5,9 +5,11 @@ import { Word } from '../types';
 interface VocabularyProps {
   words: Word[];
   onRemoveWord: (wordStr: string) => void;
+  onBackToReader?: () => void;
+  hasActiveArticle?: boolean;
 }
 
-const Vocabulary: React.FC<VocabularyProps> = ({ words, onRemoveWord }) => {
+const Vocabulary: React.FC<VocabularyProps> = ({ words, onRemoveWord, onBackToReader, hasActiveArticle }) => {
   const [filter, setFilter] = useState('');
 
   const filteredWords = words.filter(w => 
@@ -17,6 +19,18 @@ const Vocabulary: React.FC<VocabularyProps> = ({ words, onRemoveWord }) => {
 
   return (
     <div className="animate-fade-in space-y-8">
+      {hasActiveArticle && onBackToReader && (
+        <button 
+          onClick={onBackToReader}
+          className="group flex items-center gap-2 text-indigo-600 font-bold hover:text-indigo-700 transition-colors bg-indigo-50 px-4 py-2 rounded-xl mb-2"
+        >
+          <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          返回正在阅读的文章
+        </button>
+      )}
+
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">生词本</h1>
@@ -60,9 +74,12 @@ const Vocabulary: React.FC<VocabularyProps> = ({ words, onRemoveWord }) => {
               </div>
               <div className="space-y-3">
                 <p className="text-lg text-gray-700 font-medium">{word.translation}</p>
-                <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
-                  <p className="text-sm text-gray-500 italic leading-relaxed font-serif">
+                <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-2">
+                  <p className="text-sm text-gray-800 italic leading-relaxed font-serif">
                     "{word.example}"
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    {word.exampleTranslation}
                   </p>
                 </div>
               </div>

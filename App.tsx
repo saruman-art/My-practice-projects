@@ -40,7 +40,8 @@ const App: React.FC = () => {
         ...data,
         imageUrl: imageUrl || undefined,
         difficulty: targetLevel,
-        date: new Date().toLocaleDateString()
+        date: new Date().toLocaleDateString(),
+        completed: false
       };
       
       setState(prev => ({
@@ -56,6 +57,18 @@ const App: React.FC = () => {
       setLoading(false);
       setLoadingMessage('');
     }
+  };
+
+  const handleCompleteArticle = (articleId: string) => {
+    setState(prev => ({
+      ...prev,
+      readHistory: prev.readHistory.map(a => 
+        a.id === articleId ? { ...a, completed: true } : a
+      ),
+      currentArticle: prev.currentArticle?.id === articleId 
+        ? { ...prev.currentArticle, completed: true } 
+        : prev.currentArticle
+    }));
   };
 
   const handleViewHistoryArticle = (article: Article) => {
@@ -83,7 +96,8 @@ const App: React.FC = () => {
   const handleRemoveHistory = (id: string) => {
     setState(prev => ({
       ...prev,
-      readHistory: prev.readHistory.filter(a => a.id !== id)
+      readHistory: prev.readHistory.filter(a => a.id !== id),
+      currentArticle: prev.currentArticle?.id === id ? null : prev.currentArticle
     }));
   };
 
@@ -115,7 +129,9 @@ const App: React.FC = () => {
           <Reader 
             article={state.currentArticle} 
             vocabulary={state.vocabulary}
-            onAddWord={handleAddWord} 
+            onAddWord={handleAddWord}
+            onComplete={handleCompleteArticle}
+            onBack={() => setView('dashboard')}
           />
         )}
 
@@ -123,6 +139,8 @@ const App: React.FC = () => {
           <Vocabulary 
             words={state.vocabulary} 
             onRemoveWord={handleRemoveWord}
+            onBackToReader={() => setView('reader')}
+            hasActiveArticle={!!state.currentArticle}
           />
         )}
       </main>

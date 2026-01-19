@@ -12,7 +12,7 @@ interface WordModalProps {
 
 const WordModal: React.FC<WordModalProps> = ({ word, context, onClose, onSave }) => {
   const [loading, setLoading] = useState(true);
-  const [explanation, setExplanation] = useState<{ phonetic: string, translation: string, example: string } | null>(null);
+  const [explanation, setExplanation] = useState<{ phonetic: string, translation: string, example: string, exampleTranslation: string } | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
   
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -119,8 +119,9 @@ const WordModal: React.FC<WordModalProps> = ({ word, context, onClose, onSave })
 
               <section>
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">学习例句</h3>
-                <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
-                  <p className="text-gray-600 italic leading-relaxed text-sm">"{explanation?.example}"</p>
+                <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-2">
+                  <p className="text-gray-800 italic leading-relaxed text-sm">"{explanation?.example}"</p>
+                  <p className="text-gray-400 text-xs">{explanation?.exampleTranslation}</p>
                 </div>
               </section>
             </div>
